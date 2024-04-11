@@ -1,51 +1,40 @@
-# Copyright (c) Streamlit Inc. (2018-2022) Snowflake Inc. (2022)
-#
-# Licensed under the Apache License, Version 2.0 (the "License");
-# you may not use this file except in compliance with the License.
-# You may obtain a copy of the License at
-#
-#     http://www.apache.org/licenses/LICENSE-2.0
-#
-# Unless required by applicable law or agreed to in writing, software
-# distributed under the License is distributed on an "AS IS" BASIS,
-# WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-# See the License for the specific language governing permissions and
-# limitations under the License.
-
 import streamlit as st
-from streamlit.logger import get_logger
+from streamlit_option_menu import option_menu
+from app_utils import switch_page
+from PIL import Image
 
-LOGGER = get_logger(__name__)
+st.set_page_config(page_title = "Interview Chat Bot", layout = "centered",page_icon="🤖")
 
-
-def run():
-    st.set_page_config(
-        page_title="Hello",
-        page_icon="👋",
+home_title = "Interview Chat Bot"
+home_introduction = "Welcome to Interview Chat Bot, empowering your interview preparation with generative AI."
+st.markdown(
+    "<style>#MainMenu{visibility:hidden;}</style>",
+    unsafe_allow_html=True
+)
+st.markdown(f"""# {home_title} <span style=color:#2E9BF5><font size=5>Beta</font></span>""",unsafe_allow_html=True)
+st.markdown("""\n""")
+#st.markdown("#### Greetings")
+st.markdown("Welcome to Interview Chat Bot! 👏 Interview Chat Bot is your personal interviewer powered by generative AI that conducts mock interviews."
+            "You can upload your resume and enter job descriptions, and AI Interviewer will ask you customized questions. ")
+st.markdown("""\n""")
+st.markdown("#### Get started!")
+st.markdown("Select one of the following screens to start your interview!")
+selected = option_menu(
+        menu_title= None,
+        options=["Professional", "Resume"],
+        icons = ["cast", "cloud-upload", "cast"],
+        default_index=0,
+        orientation="horizontal",
     )
-
-    st.write("# Welcome to Streamlit! 👋")
-
-    st.sidebar.success("Select a demo above.")
-
-    st.markdown(
-        """
-        Streamlit is an open-source app framework built specifically for
-        Machine Learning and Data Science projects.
-        **👈 Select a demo from the sidebar** to see some examples
-        of what Streamlit can do!
-        ### Want to learn more?
-        - Check out [streamlit.io](https://streamlit.io)
-        - Jump into our [documentation](https://docs.streamlit.io)
-        - Ask a question in our [community
-          forums](https://discuss.streamlit.io)
-        ### See more complex demos
-        - Use a neural net to [analyze the Udacity Self-driving Car Image
-          Dataset](https://github.com/streamlit/demo-self-driving)
-        - Explore a [New York City rideshare dataset](https://github.com/streamlit/demo-uber-nyc-pickups)
-    """
+if selected == 'Professional':
+    st.info("""
+        📚In this session, the AI Interviewer will assess your technical skills as they relate to the job description.""")
+    if st.button("Start Interview!"):
+        switch_page("Professional Page")
+if selected == 'Resume':
+    st.info("""
+    📚In this session, the AI Interviewer will review your resume and discuss your past experiences."""
     )
-
-
-if __name__ == "__main__":
-    run()
+    if st.button("Start Interview!"):
+        switch_page("Resume Page")
+st.markdown("""\n""")
